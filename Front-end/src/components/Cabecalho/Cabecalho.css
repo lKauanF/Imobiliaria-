@@ -1,0 +1,134 @@
+.cabecalho {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  z-index: 20;
+  background: var(--cor-branco);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+
+.cabecalho-conteudo {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 78px;
+  padding: 0 var(--espaco-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cabecalho-esquerda {
+  flex: 1;
+}
+
+.cabecalho-direita {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+}
+
+/* Botão de alertas */
+.cabecalho-botao-icone {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: none;
+  background: var(--cor-branco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--cor-preto);
+  box-shadow: var(--sombra-suave);
+}
+
+/* Avatar simples */
+.cabecalho-avatar-wrapper {
+  position: relative;
+}
+
+.cabecalho-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.12s ease;
+}
+
+.cabecalho-avatar:hover {
+  transform: scale(1.05);
+}
+
+/* CARD DO MENU */
+.cabecalho-menu-perfil {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  width: 240px;
+  background: var(--cor-branco);
+  border-radius: 16px;
+  padding: var(--espaco-4);
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cabecalho-menu-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.cabecalho-menu-nome {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cabecalho-menu-email {
+  font-size: var(--fs-mini);
+  color: var(--cor-preto-50);
+}
+
+.cabecalho-menu-divisao {
+  width: 100%;
+  height: 1px;
+  background: #e6e6e6;
+  margin: var(--espaco-2) 0;
+}
+
+.cabecalho-menu-metricas {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cabecalho-menu-metrica {
+  text-align: center;
+}
+
+.cabecalho-menu-metrica .valor {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.cabecalho-menu-metrica .label {
+  font-size: 0.75rem;
+  color: var(--cor-preto-50);
+}

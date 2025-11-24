@@ -1,0 +1,103 @@
+.profile-card {
+  width: clamp(180px, 26vw, 240px);
+  height: clamp(180px, 26vw, 240px);
+   min-width: 160px;
+  border-radius: var(--radius);
+  background: var(--white);
+  border: 1px solid #e3e6ea;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s ease;
+  cursor: pointer;
+  
+}
+
+.profile-card:hover {
+  background: var(--blue);
+  color: var(--white);
+  transform: translateY(-4px);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 6px 14px rgba(7, 44, 78, 0.3);
+}
+
+.profile-card.selected {
+  background: var(--blue);
+  color: var(--white);
+  transform: translateY(-4px);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 6px 14px rgba(7, 44, 78, 0.3);
+}
+
+/* Espaçamento da seção como um todo */
+.profile-select-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 32px;
+}
+
+/* MAIS espaço entre subtítulo e cards */
+.subtitle {
+  margin-bottom: 48px; /* antes era 24px ou 32px */
+}
+
+/* MAIS espaço entre os cards e o botão */
+.profile-options {
+  display: flex;
+  gap: 48px; /* espaço lateral entre os cards */
+  justify-content: center;
+  margin-bottom: 48px; /* AQUI aumenta espaço entre cards e botão */
+}
+
+.profile-icon {
+  width: clamp(54px, 7vw, 78px);
+  height: clamp(54px, 7vw, 78px);
+  margin-bottom: clamp(8px, 1.2vw, 16px);
+  background: var(--ice);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.profile-card:hover .profile-icon,
+.profile-card.selected .profile-icon {
+  background: var(--white);
+}
+
+.profile-label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.profile-icon {
+  width: 68px;
+  height: 68px;
+  background: var(--ice);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+  transition: background 0.3s;
+}
+
+
+
+/* manter o fundo branco ao selecionar ou hover */
+.profile-card:hover .profile-icon,
+.profile-card.selected .profile-icon {
+  background: var(--white);
+}
+
+/* manter o ícone sempre preto */
+.profile-card:hover .profile-icon svg,
+.profile-card.selected .profile-icon svg {
+  color: var(--black);
+}
+
+

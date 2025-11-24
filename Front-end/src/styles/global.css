@@ -1,0 +1,72 @@
+:root {
+  /* Cores principais */
+  --cor-preto: #000000;
+  --cor-preto-50: rgba(0, 0, 0, 0.5);
+  --cor-preto-30: rgba(0, 0, 0, 0.3);
+
+  --cor-branco: #ffffff;
+  --cor-branco-50: rgba(255, 255, 255, 0.5);
+  --cor-branco-30: rgba(255, 255, 255, 0.3);
+
+  --cor-borda: #d9d9d9;
+  --cor-fundo-claro: #f2f5f7;
+
+  --cor-primaria: #072c4e;   /* azul principal */
+  --cor-secundaria: #3ea0e1; /* azul para destaques/gráficos */
+
+  /* Sombra padrão */
+  --sombra-suave: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --sombra-media: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+  /* Fontes */
+  --fonte-titulo: "Playfair Display", serif;
+  --fonte-corpo: "Roboto", sans-serif;
+
+  /* Tamanhos de fonte (escala fluida) */
+  --fs-titulo: clamp(1.6rem, 2vw, 2.2rem);
+  --fs-subtitulo: clamp(0.95rem, 1.6vw, 1.2rem);
+  --fs-texto: clamp(0.85rem, 1.2vw, 1rem);
+  --fs-mini: clamp(0.7rem, 1vw, 0.9rem);
+
+  /* Espaçamentos */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 20px;
+  --espaco-6: 24px;
+  --espaco-8: 32px;
+  --espaco-10: 40px;
+
+  /* Raio de borda */
+  --raio: 12px;
+  --raio-grande: 18px;
+}
+
+/* Reset bem básico + base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-corpo);
+  color: var(--cor-preto);
+  background: var(--cor-fundo-claro);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Classe utilitária para página cheia */
+.pagina {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,57 @@
+.lista-imoveis {
+  width: 380px;
+  height: calc(100vh - 140px);
+  background: var(--cor-fundo-claro);
+  padding: var(--espaco-4);
+  border-left: 1px solid var(--cor-borda);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+/* Scroll estilizado */
+.lista-imoveis::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lista-imoveis::-webkit-scrollbar-thumb {
+  background: var(--cor-preto-30);
+  border-radius: 6px;
+}
+
+/* Topo */
+.lista-imoveis-topo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.lista-imoveis-titulo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Filtros */
+.lista-imoveis-filtros {
+  display: flex;
+  gap: var(--espaco-3);
+}
+
+.lista-imoveis-filtros select {
+  height: 38px;
+  border-radius: var(--raio);
+  border: 1px solid var(--cor-borda);
+  padding: 0 12px;
+  font-size: var(--fs-mini);
+  background: var(--cor-branco);
+  cursor: pointer;
+}
+
+/* Grid */
+.lista-imoveis-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}

@@ -1,0 +1,24 @@
+/* Espaçamento da seção como um todo */
+.profile-select-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(24px, 6vw, 64px) clamp(16px, 4vw, 48px);
+}
+
+.profile-options {
+  display: flex;
+  gap: clamp(20px, 4vw, 48px);
+  justify-content: center;
+  margin-bottom: clamp(24px, 5vw, 48px);
+}
+
+
+/* MAIS espaço entre subtítulo e cards */
+.profile-select-page .subtitle {
+  margin-bottom: clamp(20px, 4vw, 48px);
+}
+
+
+
+

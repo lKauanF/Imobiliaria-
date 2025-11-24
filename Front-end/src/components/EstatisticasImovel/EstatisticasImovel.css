@@ -1,0 +1,159 @@
+.painel-estatisticas {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  max-width: 100%;
+  height: 100vh;
+  background: var(--cor-branco);
+  box-shadow: -4px 0 18px rgba(0, 0, 0, 0.12);
+  padding: var(--espaco-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  z-index: 40;
+  overflow-y: auto;
+}
+
+/* Scroll estilizado */
+.painel-estatisticas::-webkit-scrollbar {
+  width: 6px;
+}
+
+.painel-estatisticas::-webkit-scrollbar-thumb {
+  background: var(--cor-preto-30);
+  border-radius: 6px;
+}
+
+/* Cabeçalho */
+.painel-estatisticas-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  align-items: flex-start;
+}
+
+.painel-estatisticas-label {
+  font-size: var(--fs-mini);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--cor-preto-50);
+}
+
+.painel-estatisticas-titulo {
+  font-size: 1.1rem;
+  margin: 4px 0;
+}
+
+.painel-estatisticas-endereco {
+  font-size: var(--fs-mini);
+  color: var(--cor-preto-50);
+}
+
+/* Botão fechar */
+.painel-estatisticas-fechar {
+  border: none;
+  background: var(--cor-fundo-claro);
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Preço atual */
+.painel-estatisticas-preco {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--espaco-3);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-claro);
+}
+
+.painel-estatisticas-preco-label {
+  font-size: var(--fs-mini);
+  color: var(--cor-preto-50);
+}
+
+.painel-estatisticas-preco-valor {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/* Blocos */
+.painel-estatisticas-bloco {
+  padding: var(--espaco-3) 0;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.painel-estatisticas-bloco-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.painel-estatisticas-bloco-subtitulo {
+  font-size: var(--fs-mini);
+  color: var(--cor-preto-50);
+}
+
+/* Gráfico */
+.painel-estatisticas-grafico {
+  margin-top: var(--espaco-3);
+  height: 220px;
+}
+
+/* Valorização */
+.painel-estatisticas-card-valorizacao {
+  margin-top: var(--espaco-3);
+  padding: var(--espaco-3);
+  border-radius: var(--raio);
+  background: linear-gradient(
+    135deg,
+    rgba(7, 44, 78, 0.95),
+    rgba(62, 160, 225, 0.95)
+  );
+  color: var(--cor-branco);
+  display: flex;
+  gap: var(--espaco-3);
+  align-items: center;
+}
+
+.painel-estatisticas-valorizacao-percentual {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.painel-estatisticas-valorizacao-detalhes p {
+  margin: 0;
+  font-size: var(--fs-mini);
+}
+
+.painel-estatisticas-valorizacao-comparacao {
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+/* Serviços e comodidades */
+.painel-estatisticas-lista-servicos {
+  list-style: none;
+  padding: 0;
+  margin: var(--espaco-3) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.painel-estatisticas-item-servico {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: var(--fs-texto);
+}
+
+.painel-estatisticas-bolinha {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cor-primaria);
+}

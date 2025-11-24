@@ -1,0 +1,59 @@
+/* ================================ */
+/*            MAPA                 */
+/* ================================ */
+
+/* Container externo do mapa */
+.mapa-full {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden; /* mantém o arredondado */
+  z-index: 1;
+}
+
+/* Controles de zoom */
+.mapa-zoom-controles {
+  position: absolute;
+  left: 16px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10;
+}
+
+.mapa-zoom-controles button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #ffffff;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+}
+
+.mapa-zoom-controles button:hover {
+  transform: translateY(-2px);
+}
+
+/* Botão de fullscreen */
+.mapa-fullscreen {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 34px;
+  height: 34px;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+}
