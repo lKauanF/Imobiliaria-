@@ -19,6 +19,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
 }
 
+
 /* ======== ESTRUTURA GERAL ======== */
 
 .pagina-home {
@@ -51,9 +52,16 @@
   display: flex;
   width: 100%;
   height: 100%;
-  margin-top: 8px; /* cabeçalho + barra */
+  margin-top: 8px;
   padding: 0 40px 40px 40px;
   gap: 30px;
+}
+
+/* DESKTOP: abre espaço para a sidebar fixa à esquerda */
+@media (min-width: 821px) {
+  .home-layout {
+    padding-left: 140px; /* distância da sidebar + um respiro */
+  }
 }
 
 /* ======== MAPA ======== */
@@ -64,11 +72,7 @@
   border-radius: 22px;
   overflow: hidden;
   height: calc(100vh - 200px);
-  position: relative; /* garante stacking context */
-  z-index: 1;         /* abaixo do modal (9999) */
 }
-
-/* ======== LISTA ======== */
 
 .home-lista {
   width: 420px;
@@ -107,7 +111,6 @@
 
 @media (max-width: 700px) {
   .home-barra-topo {
-    display: none; /* no mobile vira modal */
+    display: none;
   }
 }
-
