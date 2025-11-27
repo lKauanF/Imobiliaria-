@@ -49,22 +49,24 @@ export function Home() {
     setSelectedProperty(imovel);
   }
 
+  function handleFecharLista() {
+    setPesquisou(false);
+    setSelectedProperty(null);
+  }
+
   return (
     <div className="pagina-home">
       <Cabecalho />
       <BarraLateral />
-
-      <div className="home-top">
-        <BarraBusca onBuscar={handleBuscar} />
-      </div>
 
       <div
         className={`home-layout ${
           pesquisou ? "com-resultados" : "sem-resultados"
         } ${selectedProperty ? "com-estatisticas" : ""}`}
       >
-        {/* COLUNA 1: MAPA */}
+        {/* COLUNA 1: MAPA + BARRA DE BUSCA SOBREPOSTA */}
         <div className="home-col-mapa">
+          <BarraBusca onBuscar={handleBuscar} />
           <Mapa />
         </div>
 
@@ -74,6 +76,7 @@ export function Home() {
             <ListaImoveis
               resultados={MOCK_IMOVEIS}
               aoSelecionarImovel={handleSelecionarImovel}
+              aoFecharLista={handleFecharLista}
             />
           </div>
         )}

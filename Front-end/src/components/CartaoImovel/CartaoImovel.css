@@ -6,12 +6,22 @@
   background: var(--cor-branco);
   box-shadow: var(--sombra-suave);
   cursor: pointer;
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+
+  /* borda para podermos mudar só a cor no hover */
+  border: 1px solid transparent;
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
 .cartao-imovel:hover {
   transform: translateY(-2px);
   box-shadow: var(--sombra-media);
+
+  /* borda azul no hover */
+  border-color: var(--cor-primaria);
 }
 
 /* Thumb à esquerda */
@@ -43,6 +53,11 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--espaco-2);
+}
+
+.cartao-imovel-textos {
+  display: flex;
+  flex-direction: column;
 }
 
 .cartao-imovel-preco {
@@ -130,11 +145,14 @@
   cursor: pointer;
   box-shadow: var(--sombra-media);
   white-space: nowrap;
-  transition: background 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
 }
 
 .cartao-imovel-botao:hover {
-  background: #041a30; /* pode criar uma var --cor-primaria-escura depois se quiser */
+  background: #041a30; /* pode virar var(--cor-primaria-escura) depois */
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }

@@ -1,10 +1,8 @@
 import React from "react";
 import "./CartaoImovel.css";
 
-// ajuste os caminhos para o seu assets
 import Heart from "../../assets/icons/heart.svg";
 import Love from "../../assets/icons/love.svg";
-
 
 export function CartaoImovel({ imovel, aoClicar }) {
   function handleClick() {
@@ -27,6 +25,17 @@ export function CartaoImovel({ imovel, aoClicar }) {
 
   const favoritoIcon = imovel.favorito ? Love : Heart;
 
+  // monta as características e limita para 2
+  const caracteristicas = [
+    imovel.quartos != null ? `${imovel.quartos} quartos` : null,
+    imovel.banheiros != null ? `${imovel.banheiros} banheiros` : null,
+    imovel.area != null ? `${imovel.area} m²` : null,
+    // se depois tiver garagem/vagas:
+    // imovel.vagas != null ? `${imovel.vagas} vagas` : null,
+  ].filter(Boolean); // remove null/undefined
+
+  const caracteristicasVisiveis = caracteristicas.slice(0, 2);
+
   return (
     <div className="cartao-imovel" onClick={handleClick}>
       {/* Thumb à esquerda */}
@@ -38,7 +47,10 @@ export function CartaoImovel({ imovel, aoClicar }) {
       <div className="cartao-imovel-conteudo">
         <div className="cartao-imovel-header">
           <div className="cartao-imovel-textos">
-          
+            {/* se quiser voltar com o preço, é só descomentar */}
+            {/* <div className="cartao-imovel-preco">
+              R$ {imovel.preco.toLocaleString("pt-BR")}
+            </div> */}
             <div className="cartao-imovel-titulo">{imovel.titulo}</div>
           </div>
 
@@ -52,7 +64,11 @@ export function CartaoImovel({ imovel, aoClicar }) {
           >
             <img
               src={favoritoIcon}
-              alt={imovel.favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+              alt={
+                imovel.favorito
+                  ? "Remover dos favoritos"
+                  : "Adicionar aos favoritos"
+              }
               className="cartao-favorito-icone"
             />
           </button>
@@ -62,9 +78,9 @@ export function CartaoImovel({ imovel, aoClicar }) {
 
         <div className="cartao-imovel-footer">
           <div className="cartao-imovel-metas">
-            <span>{imovel.area} m²</span>
-            <span>{imovel.quartos} quartos</span>
-            <span>{imovel.banheiros} banheiros</span>
+            {caracteristicasVisiveis.map((texto, index) => (
+              <span key={index}>{texto}</span>
+            ))}
           </div>
 
           <button

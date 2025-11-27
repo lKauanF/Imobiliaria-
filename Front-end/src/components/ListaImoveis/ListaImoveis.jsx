@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ListaImoveis.css";
 import { CartaoImovel } from "../CartaoImovel/CartaoImovel";
 
-export function ListaImoveis({ resultados, aoSelecionarImovel }) {
+export function ListaImoveis({ resultados, aoSelecionarImovel, aoFecharLista }) {
   const [filtroQuartos, setFiltroQuartos] = useState("");
   const [filtroEstilo, setFiltroEstilo] = useState("");
 
@@ -18,11 +18,24 @@ export function ListaImoveis({ resultados, aoSelecionarImovel }) {
 
   return (
     <div className="lista-imoveis">
-      {/* TOPO: título + bloco de filtros no estilo Figma */}
+      {/* TOPO: título + botão fechar + bloco de filtros */}
       <div className="lista-imoveis-topo">
-        <h2 className="lista-imoveis-titulo">
-          {filtrados.length} imóveis encontrados
-        </h2>
+        <div className="lista-imoveis-topo-linha">
+          <h2 className="lista-imoveis-titulo">
+            {filtrados.length} imóveis encontrados
+          </h2>
+
+          {aoFecharLista && (
+            <button
+              type="button"
+              className="lista-imoveis-fechar"
+              onClick={aoFecharLista}
+              aria-label="Fechar lista de imóveis"
+            >
+              ×
+            </button>
+          )}
+        </div>
 
         <div className="lista-imoveis-filtros-wrapper">
           <div className="lista-imoveis-filtros-header">

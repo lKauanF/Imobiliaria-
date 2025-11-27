@@ -1,34 +1,66 @@
-/* Container da lista dentro do card lateral */
 .lista-imoveis {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  height: 100%;
 }
 
-/* Topo: título + bloco de filtros */
+/* topo da lista: título + X + filtros */
 .lista-imoveis-topo {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--espaco-3);
+}
+
+/* linha com título e botão fechar */
+.lista-imoveis-topo-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
 }
 
 .lista-imoveis-titulo {
-  font-size: 1rem;
+  font-size: var(--fs-texto);
   font-weight: 600;
+  color: var(--cor-preto);
   margin: 0;
 }
 
-/* Wrapper dos filtros (faixa cinza clara, igual Figma) */
-.lista-imoveis-filtros-wrapper {
-  background: #f5f6fa;
-  border-radius: 16px;
-  padding: 10px 14px 12px;
+/* botão "X" para fechar a grid */
+.lista-imoveis-fechar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  font-size: 18px;
+  line-height: 1;
+  color: var(--cor-preto-50);
+
+  transition: background 0.16s ease, color 0.16s ease, transform 0.12s ease;
 }
 
-/* Cabeçalho do bloco "Filtro" */
+.lista-imoveis-fechar:hover {
+  background: var(--cor-fundo-claro);
+  color: var(--cor-preto);
+  transform: scale(1.05);
+}
+
+/* bloco de filtros em card, igual Figma */
+.lista-imoveis-filtros-wrapper {
+  background: var(--cor-fundo-claro);
+  border-radius: 14px;
+  padding: var(--espaco-2) var(--espaco-3) var(--espaco-3) var(--espaco-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
 .lista-imoveis-filtros-header {
   display: flex;
   align-items: center;
@@ -36,44 +68,33 @@
 }
 
 .lista-imoveis-filtro-label {
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: #7a7f8c;
+  font-size: var(--fs-mini);
+  color: var(--cor-preto-50);
 }
 
-/* Linha com os selects */
+/* selects de filtro */
 .lista-imoveis-filtros-campos {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--espaco-2);
 }
 
 .lista-imoveis-filtros-campos select {
-  height: 38px;
+  flex: 1;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--cor-borda);
   padding: 0 10px;
-  border-radius: 10px;
-  border: 1px solid #dde1ea;
-  background: #ffffff;
-  font-size: 0.85rem;
-  min-width: 120px;
+  font-size: var(--fs-mini);
   outline: none;
-  cursor: pointer;
+  background: var(--cor-branco);
+  color: var(--cor-preto);
 }
 
-/* GRID DE CARTÕES (um embaixo do outro) */
+/* área dos cards */
 .lista-imoveis-grid {
+  margin-top: var(--espaco-3);
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .lista-imoveis-filtros-campos {
-    flex-direction: column;
-  }
-
-  .lista-imoveis-filtros-campos select {
-    width: 100%;
-  }
+  gap: var(--espaco-3);
+  padding-bottom: var(--espaco-3);
 }

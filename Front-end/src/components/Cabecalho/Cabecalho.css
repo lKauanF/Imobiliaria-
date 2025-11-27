@@ -1,17 +1,16 @@
 .cabecalho {
   position: sticky;
   top: 0;
-  height: 64px;
-  z-index: 20;
+  z-index: 40;
   background: var(--cor-branco);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  height: 72px;
 }
 
 .cabecalho-conteudo {
-  max-width: 1440px;
-  margin: 0 auto;
-  height: 78px;
-  padding: 0 var(--espaco-6);
+  width: 100%;
+  height: 72px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,13 +21,23 @@
 }
 
 .cabecalho-direita {
-  margin-left: auto;            
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: var(--espaco-4);
 }
 
-/* Botão de alertas */
+/* === NOTIFICAÇÃO + TICKER === */
+
+.cabecalho-notificacao-area {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  max-width: 420px;
+  overflow: hidden;
+}
+
+/* Botão do sino */
 .cabecalho-botao-icone {
   width: 36px;
   height: 36px;
@@ -41,11 +50,108 @@
   cursor: pointer;
   color: var(--cor-preto);
   box-shadow: var(--sombra-suave);
+  position: relative;
 }
 
-/* Avatar simples */
+/* Pontinho vermelho */
+.cabecalho-notificacao-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #ef4444;
+  border: 2px solid var(--cor-branco);
+}
+
+/* Ticker colado no sino */
+.cabecalho-ticker {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cabecalho-ticker-conteudo {
+  display: inline-block;
+  font-size: var(--fs-mini);
+  color: var(--cor-preto-50);
+  animation: cabecalhoTicker 12s linear infinite;
+}
+
+/* animação: entra pela direita do sino e sai pela esquerda */
+@keyframes cabecalhoTicker {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Dropdown de notificações */
+.cabecalho-notificacao-wrapper {
+  position: relative;
+}
+
+.cabecalho-menu-notificacao {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  width: 280px;
+  background: #f7f9fc;
+  border-radius: 20px;
+  padding: 16px 18px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.18);
+  animation: fadeIn 0.15s ease;
+}
+
+.cabecalho-menu-notificacao-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cabecalho-menu-notificacao-sub {
+  font-size: 0.75rem;
+  color: var(--cor-preto-50);
+}
+
+.cabecalho-menu-notificacao-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.cabecalho-menu-notificacao-item {
+  padding: 8px 0;
+  font-size: var(--fs-mini);
+  color: var(--cor-preto);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.cabecalho-menu-notificacao-item:last-child {
+  border-bottom: none;
+}
+
+.cabecalho-menu-notificacao-item--lida {
+  color: var(--cor-preto-50);
+}
+
+/* === AVATAR E CARD DE PERFIL (mantém o que já funciona) === */
+
 .cabecalho-avatar-wrapper {
   position: relative;
+}
+
+.cabecalho-avatar-wrapper--aberto .cabecalho-avatar {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .cabecalho-avatar {
@@ -55,23 +161,23 @@
   object-fit: cover;
   cursor: pointer;
   box-shadow: var(--sombra-suave);
-  transition: transform 0.12s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
 }
 
 .cabecalho-avatar:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
-/* CARD DO MENU */
 .cabecalho-menu-perfil {
   position: absolute;
   top: 56px;
   right: 0;
-  width: 240px;
-  background: var(--cor-branco);
-  border-radius: 16px;
-  padding: var(--espaco-4);
-  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.12);
+  width: 260px;
+  background: #f7f9fc;
+  border-radius: 24px;
+  padding: 46px 24px 20px 24px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.18);
   animation: fadeIn 0.15s ease;
   display: flex;
   flex-direction: column;
@@ -79,39 +185,37 @@
   gap: var(--espaco-2);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .cabecalho-menu-avatar {
-  width: 70px;
-  height: 70px;
+  width: 76px;
+  height: 76px;
   border-radius: 999px;
   object-fit: cover;
+  position: absolute;
+  top: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: var(--sombra-media);
 }
 
 .cabecalho-menu-nome {
+  margin-top: 12px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--cor-preto);
+  text-align: center;
 }
 
 .cabecalho-menu-email {
   font-size: var(--fs-mini);
   color: var(--cor-preto-50);
+  text-align: center;
 }
 
 .cabecalho-menu-divisao {
   width: 100%;
   height: 1px;
-  background: #e6e6e6;
-  margin: var(--espaco-2) 0;
+  background: rgba(148, 163, 184, 0.35);
+  margin: var(--espaco-3) 0 var(--espaco-2);
 }
 
 .cabecalho-menu-metricas {
@@ -121,15 +225,36 @@
 }
 
 .cabecalho-menu-metrica {
+  flex: 1;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.cabecalho-menu-metrica .valor {
-  font-weight: 700;
-  font-size: 1rem;
+.cabecalho-menu-metrica:nth-child(2) {
+  border-left: 1px solid rgba(148, 163, 184, 0.4);
 }
 
 .cabecalho-menu-metrica .label {
   font-size: 0.75rem;
   color: var(--cor-preto-50);
+}
+
+.cabecalho-menu-metrica .valor {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--cor-preto);
+}
+
+/* animação genérica dos dropdowns */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -10,25 +10,25 @@
   flex-direction: column;
 }
 
-/* Barra de busca logo abaixo do cabeçalho */
+/* como a barra de busca agora está dentro do mapa,
+   não precisamos mais do home-top,
+   mas se ainda existir em algum lugar, não terá efeito */
 .home-top {
-  margin-top: var(--espaco-2);
-  padding: 0 var(--espaco-6);
+  display: none;
 }
 
 /* ======== LAYOUT PRINCIPAL (GRID) ======== */
 
 .home-layout {
   flex: 1;
-  padding: 0 var(--espaco-6) var(--espaco-6) var(--espaco-6);
-  display: grid;
-  grid-template-columns: 1fr; /* valor padrão, sobrescrito pelos estados */
-  grid-template-rows: 1fr;
-  gap: var(--espaco-4);
-  align-items: stretch;
+  padding: 0 48px 48px 48px; /* var(--espaco-6) ≈ 24px, var(--espaco-8) ≈ 32px, ajustei para 48px */
+  margin-top: 56px;          /* AQUI: valor fixo, sem variável */
 
-  /* animação suave quando o grid muda de 1 → 2 → 3 colunas */
-  transition: grid-template-columns 0.59s ease;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  gap: 24px;                 /* var(--espaco-4) ≈ 16px, aqui em px se quiser */
+  align-items: stretch;
 }
 
 /* reserva espaço da sidebar fixa no desktop */
@@ -38,13 +38,14 @@
   }
 }
 
-/* altura das colunas (cabeçalho + barra de busca somam ~180px) */
+/* altura das colunas */
 .home-col-mapa,
 .home-col-lista,
 .home-col-estatisticas {
-  height: calc(100vh - 180px);
+  height: calc(100vh - 190px); /* antes era -180px; reduz a altura para caber o novo espaço em cima */
   min-height: 260px;
 }
+
 
 /* ======== ESTADOS DO GRID ======== */
 
@@ -53,14 +54,12 @@
   grid-template-columns: 1fr;
 }
 
-/* 2) Com resultados, sem estatísticas:
-      Mapa | Lista  (lista no canto direito) */
+/* 2) Com resultados, sem estatísticas: Mapa | Lista */
 .home-layout.com-resultados:not(.com-estatisticas) {
   grid-template-columns: 1.4fr 450px;
 }
 
-/* 3) Com resultados + estatísticas:
-      Mapa | Lista | Estatísticas */
+/* 3) Com resultados + estatísticas: Mapa | Lista | Estatísticas */
 .home-layout.com-estatisticas {
   grid-template-columns: 1.2fr 450px 400px;
 }
@@ -71,6 +70,7 @@
   background: #e3e7eb;
   border-radius: 22px;
   overflow: hidden;
+  position: relative; /* importante para a barra ficar sobre o mapa */
 }
 
 /* ======== COLUNA 2: LISTA DE IMÓVEIS ======== */
@@ -82,20 +82,15 @@
   padding: var(--espaco-4);
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* quem rola é o conteúdo interno */
-
-  /* animação de entrada sempre que a lista é montada */
-  animation: slideInRight 0.56s ease;
+  overflow: hidden;
 }
 
-/* faz a lista acompanhar o mapa em altura, com scroll interno */
 .home-col-lista > .lista-imoveis {
   flex: 1;
   overflow-y: auto;
   padding-right: 4px;
 }
 
-/* scrollbar mais discreta */
 .home-col-lista > .lista-imoveis::-webkit-scrollbar {
   width: 6px;
 }
@@ -109,33 +104,15 @@
 
 .home-col-estatisticas {
   display: flex;
-
-  /* animação de entrada do painel de estatísticas */
-  animation: slideInRight 0.50s ease;
 }
 
-/* garante que o card de estatísticas ocupe toda a coluna */
 .home-col-estatisticas > .estatisticas-container {
   width: 100%;
-}
-
-/* ======== KEYFRAMES (animação suave de entrada) ======== */
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 /* ======== RESPONSIVO ======== */
 
 @media (max-width: 1200px) {
-  /* aproxima do layout 2 colunas: mapa e painel direito empilhando stats */
   .home-layout.com-estatisticas {
     grid-template-columns: 1.2fr 360px;
     grid-template-rows: auto auto;
