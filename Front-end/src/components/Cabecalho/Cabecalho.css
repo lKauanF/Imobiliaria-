@@ -22,6 +22,7 @@
 }
 
 .cabecalho-direita {
+  margin-left: auto;            
   display: flex;
   align-items: center;
   gap: var(--espaco-4);

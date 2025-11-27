@@ -1,116 +1,181 @@
-/* ======== MODAL GLOBAL ACIMA DO MAPA ======== */
-
-.home-modal-overlay {
-  position: fixed;          /* Fica preso na tela inteira */
-  inset: 0;                 /* top:0; right:0; bottom:0; left:0 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.35); /* fundo escuro */
-  z-index: 9999;            /* Maior que qualquer coisa do mapa */
-}
-
-.home-modal-conteudo {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 24px;
-  max-width: 520px;
-  width: 90%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-}
-
-
 /* ======== ESTRUTURA GERAL ======== */
 
 .pagina-home {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #f2f5f7;
+  background: var(--cor-fundo-claro);
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
-/* CABEÇALHO já está fixo no seu componente */
-
-.home-barra-topo {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  position: fixed;
-  top: 80px;
-  z-index: 40;
-
-  padding: 0 40px;
+/* Barra de busca logo abaixo do cabeçalho */
+.home-top {
+  margin-top: var(--espaco-2);
+  padding: 0 var(--espaco-6);
 }
 
-/* ======== LAYOUT PRINCIPAL ======== */
+/* ======== LAYOUT PRINCIPAL (GRID) ======== */
 
 .home-layout {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  margin-top: 8px;
-  padding: 0 40px 40px 40px;
-  gap: 30px;
+  flex: 1;
+  padding: 0 var(--espaco-6) var(--espaco-6) var(--espaco-6);
+  display: grid;
+  grid-template-columns: 1fr; /* valor padrão, sobrescrito pelos estados */
+  grid-template-rows: 1fr;
+  gap: var(--espaco-4);
+  align-items: stretch;
+
+  /* animação suave quando o grid muda de 1 → 2 → 3 colunas */
+  transition: grid-template-columns 0.59s ease;
 }
 
-/* DESKTOP: abre espaço para a sidebar fixa à esquerda */
+/* reserva espaço da sidebar fixa no desktop */
 @media (min-width: 821px) {
   .home-layout {
-    padding-left: 140px; /* distância da sidebar + um respiro */
+    padding-left: 140px;
   }
 }
 
-/* ======== MAPA ======== */
+/* altura das colunas (cabeçalho + barra de busca somam ~180px) */
+.home-col-mapa,
+.home-col-lista,
+.home-col-estatisticas {
+  height: calc(100vh - 180px);
+  min-height: 260px;
+}
 
-.home-mapa {
-  flex: 1;
+/* ======== ESTADOS DO GRID ======== */
+
+/* 1) Sem resultados: só o mapa ocupa tudo */
+.home-layout.sem-resultados {
+  grid-template-columns: 1fr;
+}
+
+/* 2) Com resultados, sem estatísticas:
+      Mapa | Lista  (lista no canto direito) */
+.home-layout.com-resultados:not(.com-estatisticas) {
+  grid-template-columns: 1.4fr 450px;
+}
+
+/* 3) Com resultados + estatísticas:
+      Mapa | Lista | Estatísticas */
+.home-layout.com-estatisticas {
+  grid-template-columns: 1.2fr 450px 400px;
+}
+
+/* ======== COLUNA 1: MAPA ======== */
+
+.home-col-mapa {
   background: #e3e7eb;
   border-radius: 22px;
   overflow: hidden;
-  height: calc(100vh - 200px);
 }
 
-.home-lista {
-  width: 420px;
-  background: white;
+/* ======== COLUNA 2: LISTA DE IMÓVEIS ======== */
+
+.home-col-lista {
+  background: var(--cor-branco);
   border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  padding: 20px;
+  box-shadow: var(--sombra-suave);
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* quem rola é o conteúdo interno */
+
+  /* animação de entrada sempre que a lista é montada */
+  animation: slideInRight 0.56s ease;
+}
+
+/* faz a lista acompanhar o mapa em altura, com scroll interno */
+.home-col-lista > .lista-imoveis {
+  flex: 1;
   overflow-y: auto;
-  height: calc(100vh - 200px);
+  padding-right: 4px;
+}
+
+/* scrollbar mais discreta */
+.home-col-lista > .lista-imoveis::-webkit-scrollbar {
+  width: 6px;
+}
+
+.home-col-lista > .lista-imoveis::-webkit-scrollbar-thumb {
+  background: var(--cor-preto-30);
+  border-radius: 999px;
+}
+
+/* ======== COLUNA 3: ESTATÍSTICAS ======== */
+
+.home-col-estatisticas {
+  display: flex;
+
+  /* animação de entrada do painel de estatísticas */
+  animation: slideInRight 0.50s ease;
+}
+
+/* garante que o card de estatísticas ocupe toda a coluna */
+.home-col-estatisticas > .estatisticas-container {
+  width: 100%;
+}
+
+/* ======== KEYFRAMES (animação suave de entrada) ======== */
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* ======== RESPONSIVO ======== */
 
-@media (max-width: 1100px) {
-  .home-layout {
-    gap: 20px;
+@media (max-width: 1200px) {
+  /* aproxima do layout 2 colunas: mapa e painel direito empilhando stats */
+  .home-layout.com-estatisticas {
+    grid-template-columns: 1.2fr 360px;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "mapa lista"
+      "mapa stats";
+  }
+
+  .home-col-mapa {
+    grid-area: mapa;
+  }
+
+  .home-col-lista {
+    grid-area: lista;
+  }
+
+  .home-col-estatisticas {
+    grid-area: stats;
   }
 }
 
 @media (max-width: 900px) {
   .home-layout {
-    flex-direction: column;
-    padding: 0 20px 20px 20px;
+    padding: 0 var(--espaco-4) var(--espaco-4) var(--espaco-4);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "mapa"
+      "lista"
+      "stats";
   }
 
-  .home-mapa {
-    height: calc(100vh - 200px);
-  }
-
-  .home-lista {
-    width: 100%;
+  .home-col-mapa,
+  .home-col-lista,
+  .home-col-estatisticas {
     height: auto;
-    max-height: 60vh;
+    min-height: 0;
   }
-}
 
-@media (max-width: 700px) {
-  .home-barra-topo {
-    display: none;
+  .home-col-mapa {
+    min-height: 260px;
   }
 }

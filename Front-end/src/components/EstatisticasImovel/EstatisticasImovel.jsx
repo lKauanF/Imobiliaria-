@@ -1,142 +1,68 @@
 import React from "react";
 import "./EstatisticasImovel.css";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 
-export function EstatisticasImovel({ imovel, aoFechar }) {
-  if (!imovel) return null;
-
-  // Dados mockados de histórico de preço (só para protótipo)
-  const historicoPreco = imovel.historicoPreco || [
-    { mes: "Jan", valor: imovel.preco * 0.92 },
-    { mes: "Fev", valor: imovel.preco * 0.94 },
-    { mes: "Mar", valor: imovel.preco * 0.96 },
-    { mes: "Abr", valor: imovel.preco * 0.98 },
-    { mes: "Mai", valor: imovel.preco * 1.0 },
-  ];
-
-  // Mock de valorização média
-  const valorizacao = imovel.valorizacao || {
-    percentual: 12,
-    periodo: "últimos 5 anos",
-    comparacaoCidade: "+3.5% acima da média da cidade",
-  };
-
-  // Mock de serviços e comodidades
-  const servicos = imovel.servicos || [
-    "Mercado a menos de 500m",
-    "Escola particular a 800m",
-    "Linha de ônibus a 200m",
-    "Parque e área verde próximos",
-    "Farmácia em até 400m",
-  ];
+// por enquanto só usamos os dados básicos do imóvel para exibir o título
+export function EstatisticasImovel({ imovel }) {
+  if (!imovel) {
+    return (
+      <div className="estatisticas-container estatisticas-container-empty">
+        <p>Selecione um imóvel para ver as estatísticas.</p>
+      </div>
+    );
+  }
 
   return (
-    <aside className="painel-estatisticas">
-      <div className="painel-estatisticas-cabecalho">
-        <div>
-          <div className="painel-estatisticas-label">Imóvel selecionado</div>
-          <h2 className="painel-estatisticas-titulo">{imovel.titulo}</h2>
-          <p className="painel-estatisticas-endereco">{imovel.endereco}</p>
-        </div>
+    <div className="estatisticas-container">
+      <h3 className="estatisticas-title">Estatísticas do imóvel</h3>
+      <p className="estatisticas-subtitle">{imovel.titulo}</p>
 
-        <button
-          className="painel-estatisticas-fechar"
-          type="button"
-          onClick={aoFechar}
-        >
-          ×
-        </button>
-      </div>
-
-      <div className="painel-estatisticas-preco">
-        <span className="painel-estatisticas-preco-label">Preço atual</span>
-        <span className="painel-estatisticas-preco-valor">
-          R$ {imovel.preco.toLocaleString("pt-BR")}
-        </span>
-      </div>
-
-      {/* Histórico de Preço */}
-      <section className="painel-estatisticas-bloco">
-        <div className="painel-estatisticas-bloco-header">
-          <h3>Histórico de preço</h3>
-          <span className="painel-estatisticas-bloco-subtitulo">
-            Evolução nos últimos meses
-          </span>
-        </div>
-
-        <div className="painel-estatisticas-grafico">
-          <ResponsiveContainer width="100%" height={220}>
-            <LineChart data={historicoPreco}>
-              <XAxis dataKey="mes" />
-              <YAxis
-                tickFormatter={(v) =>
-                  `R$ ${(v / 1000).toFixed(0)} mil`
-                }
-              />
-              <Tooltip
-                formatter={(value) =>
-                  `R$ ${Number(value).toLocaleString("pt-BR")}`
-                }
-              />
-              <Line
-                type="monotone"
-                dataKey="valor"
-                stroke="#3ea0e1"
-                strokeWidth={2}
-                dot={{ r: 3 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </section>
-
-      {/* Valorização média da região */}
-      <section className="painel-estatisticas-bloco">
-        <div className="painel-estatisticas-bloco-header">
-          <h3>Valorização média da região</h3>
-          <span className="painel-estatisticas-bloco-subtitulo">
-            Comportamento de preço no entorno
-          </span>
-        </div>
-
-        <div className="painel-estatisticas-card-valorizacao">
-          <div className="painel-estatisticas-valorizacao-percentual">
-            {valorizacao.percentual}%
+      <div className="estatisticas-grid">
+        {/* Card 1 - Histórico de preço */}
+        <section className="estatistica-card">
+          <div className="estatistica-card-header">
+            <h4>Histórico de preço do imóvel</h4>
+            <span className="estatistica-card-tag">Últimos 12 meses</span>
           </div>
-          <div className="painel-estatisticas-valorizacao-detalhes">
-            <p>{valorizacao.periodo}</p>
-            <p className="painel-estatisticas-valorizacao-comparacao">
-              {valorizacao.comparacaoCidade}
-            </p>
+
+          <div className="estatistica-chart-placeholder">
+            <span>Gráfico de linha aqui</span>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Serviços e comodidades */}
-      <section className="painel-estatisticas-bloco">
-        <div className="painel-estatisticas-bloco-header">
-          <h3>Serviços e comodidades</h3>
-          <span className="painel-estatisticas-bloco-subtitulo">
-            O que existe próximo ao imóvel
-          </span>
-        </div>
+        {/* Card 2 - Variação média da região */}
+        <section className="estatistica-card">
+          <div className="estatistica-card-header">
+            <h4>Variação média da região</h4>
+            <span className="estatistica-card-tag">Preço por m²</span>
+          </div>
 
-        <ul className="painel-estatisticas-lista-servicos">
-          {servicos.map((servico, i) => (
-            <li key={i} className="painel-estatisticas-item-servico">
-              <span className="painel-estatisticas-bolinha" />
-              <span>{servico}</span>
+          <div className="estatistica-chart-placeholder">
+            <span>Gráfico de barras aqui</span>
+          </div>
+        </section>
+
+        {/* Card 3 - Serviços e infraestrutura */}
+        <section className="estatistica-card">
+          <div className="estatistica-card-header">
+            <h4>Serviço e infraestrutura</h4>
+          </div>
+
+          <ul className="estatistica-servicos-lista">
+            <li>
+              <span className="servico-label">Supermercado</span>
+              <span className="servico-valor">750 m</span>
             </li>
-          ))}
-        </ul>
-      </section>
-    </aside>
+            <li>
+              <span className="servico-label">Escola</span>
+              <span className="servico-valor">850 m</span>
+            </li>
+            <li>
+              <span className="servico-label">Hospital</span>
+              <span className="servico-valor">1,2 km</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
   );
 }

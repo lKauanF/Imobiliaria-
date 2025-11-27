@@ -37,13 +37,7 @@ export function Mapa() {
         <button onClick={diminuirZoom}>-</button>
       </div>
 
-      {/* Fullscreen */}
-      <div
-        className="mapa-fullscreen"
-        onClick={() => document.documentElement.requestFullscreen()}
-      >
-        ⛶
-      </div>
+     
 
       {isLoaded ? (
         <GoogleMap

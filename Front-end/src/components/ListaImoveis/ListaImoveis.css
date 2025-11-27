@@ -1,57 +1,79 @@
+/* Container da lista dentro do card lateral */
 .lista-imoveis {
-  width: 380px;
-  height: calc(100vh - 140px);
-  background: var(--cor-fundo-claro);
-  padding: var(--espaco-4);
-  border-left: 1px solid var(--cor-borda);
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-4);
+  gap: 16px;
 }
 
-/* Scroll estilizado */
-.lista-imoveis::-webkit-scrollbar {
-  width: 6px;
-}
-
-.lista-imoveis::-webkit-scrollbar-thumb {
-  background: var(--cor-preto-30);
-  border-radius: 6px;
-}
-
-/* Topo */
+/* Topo: título + bloco de filtros */
 .lista-imoveis-topo {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-3);
+  gap: 10px;
 }
 
 .lista-imoveis-titulo {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   margin: 0;
 }
 
-/* Filtros */
-.lista-imoveis-filtros {
+/* Wrapper dos filtros (faixa cinza clara, igual Figma) */
+.lista-imoveis-filtros-wrapper {
+  background: #f5f6fa;
+  border-radius: 16px;
+  padding: 10px 14px 12px;
   display: flex;
-  gap: var(--espaco-3);
+  flex-direction: column;
+  gap: 8px;
 }
 
-.lista-imoveis-filtros select {
+/* Cabeçalho do bloco "Filtro" */
+.lista-imoveis-filtros-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lista-imoveis-filtro-label {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #7a7f8c;
+}
+
+/* Linha com os selects */
+.lista-imoveis-filtros-campos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lista-imoveis-filtros-campos select {
   height: 38px;
-  border-radius: var(--raio);
-  border: 1px solid var(--cor-borda);
-  padding: 0 12px;
-  font-size: var(--fs-mini);
-  background: var(--cor-branco);
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid #dde1ea;
+  background: #ffffff;
+  font-size: 0.85rem;
+  min-width: 120px;
+  outline: none;
   cursor: pointer;
 }
 
-/* Grid */
+/* GRID DE CARTÕES (um embaixo do outro) */
 .lista-imoveis-grid {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-4);
+  gap: 14px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .lista-imoveis-filtros-campos {
+    flex-direction: column;
+  }
+
+  .lista-imoveis-filtros-campos select {
+    width: 100%;
+  }
 }

@@ -10,7 +10,7 @@ import { EstatisticasImovel } from "../../components/EstatisticasImovel/Estatist
 
 export function Home() {
   const [pesquisou, setPesquisou] = useState(false);
-  const [showModal, setShowModal] = useState(true);
+  const [selectedProperty, setSelectedProperty] = useState(null);
 
   const MOCK_IMOVEIS = [
     {
@@ -45,6 +45,10 @@ export function Home() {
     setPesquisou(true);
   }
 
+  function handleSelecionarImovel(imovel) {
+    setSelectedProperty(imovel);
+  }
+
   return (
     <div className="pagina-home">
       <Cabecalho />
@@ -57,20 +61,30 @@ export function Home() {
       <div
         className={`home-layout ${
           pesquisou ? "com-resultados" : "sem-resultados"
-        }`}
+        } ${selectedProperty ? "com-estatisticas" : ""}`}
       >
-        <div className="home-mapa">
+        {/* COLUNA 1: MAPA */}
+        <div className="home-col-mapa">
           <Mapa />
         </div>
 
+        {/* COLUNA 2: LISTA DE IMÓVEIS (apenas após busca) */}
         {pesquisou && (
-          <div className="home-lista">
-            <ListaImoveis resultados={MOCK_IMOVEIS} />
+          <div className="home-col-lista">
+            <ListaImoveis
+              resultados={MOCK_IMOVEIS}
+              aoSelecionarImovel={handleSelecionarImovel}
+            />
           </div>
         )}
-      
-        </div>
-      
+
+        {/* COLUNA 3: ESTATÍSTICAS (apenas após selecionar um imóvel) */}
+        {selectedProperty && (
+          <aside className="home-col-estatisticas">
+            <EstatisticasImovel imovel={selectedProperty} />
+          </aside>
+        )}
+      </div>
     </div>
   );
 }

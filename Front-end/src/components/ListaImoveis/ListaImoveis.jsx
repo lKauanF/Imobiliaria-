@@ -18,34 +18,42 @@ export function ListaImoveis({ resultados, aoSelecionarImovel }) {
 
   return (
     <div className="lista-imoveis">
+      {/* TOPO: título + bloco de filtros no estilo Figma */}
       <div className="lista-imoveis-topo">
         <h2 className="lista-imoveis-titulo">
           {filtrados.length} imóveis encontrados
         </h2>
 
-        <div className="lista-imoveis-filtros">
-          <select
-            value={filtroQuartos}
-            onChange={(e) => setFiltroQuartos(e.target.value)}
-          >
-            <option value="">Quartos</option>
-            <option value="1">1 quarto</option>
-            <option value="2">2 quartos</option>
-            <option value="3">3 quartos</option>
-          </select>
+        <div className="lista-imoveis-filtros-wrapper">
+          <div className="lista-imoveis-filtros-header">
+            <span className="lista-imoveis-filtro-label">Filtro</span>
+          </div>
 
-          <select
-            value={filtroEstilo}
-            onChange={(e) => setFiltroEstilo(e.target.value)}
-          >
-            <option value="">Estilo</option>
-            <option value="moderno">Moderno</option>
-            <option value="classico">Clássico</option>
-            <option value="luxo">Luxo</option>
-          </select>
+          <div className="lista-imoveis-filtros-campos">
+            <select
+              value={filtroQuartos}
+              onChange={(e) => setFiltroQuartos(e.target.value)}
+            >
+              <option value="">Quartos</option>
+              <option value="1">1 quarto</option>
+              <option value="2">2 quartos</option>
+              <option value="3">3 quartos</option>
+            </select>
+
+            <select
+              value={filtroEstilo}
+              onChange={(e) => setFiltroEstilo(e.target.value)}
+            >
+              <option value="">Estilo</option>
+              <option value="moderno">Moderno</option>
+              <option value="classico">Clássico</option>
+              <option value="luxo">Luxo</option>
+            </select>
+          </div>
         </div>
       </div>
 
+      {/* LISTA DE CARTÕES */}
       <div className="lista-imoveis-grid">
         {filtrados.map((imovel) => (
           <CartaoImovel

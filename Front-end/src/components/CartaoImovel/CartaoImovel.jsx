@@ -1,44 +1,79 @@
 import React from "react";
 import "./CartaoImovel.css";
 
-export function CartaoImovel({ imovel, aoClicar }) {
-  return (
-    <div
-      className="cartao-imovel"
-      onClick={() => aoClicar && aoClicar(imovel)}
-    >
-      <div className="cartao-imovel-imagem-container">
-        <img
-          src={imovel.imagem}
-          alt={imovel.titulo}
-          className="cartao-imovel-imagem"
-        />
+// ajuste os caminhos para o seu assets
+import Heart from "../../assets/icons/heart.svg";
+import Love from "../../assets/icons/love.svg";
 
-        <button
-          className="cartao-favorito"
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            // aqui depois dá para ligar com favorito real
-          }}
-        >
-          {imovel.favorito ? "★" : "☆"}
-        </button>
+
+export function CartaoImovel({ imovel, aoClicar }) {
+  function handleClick() {
+    if (aoClicar) {
+      aoClicar(imovel);
+    }
+  }
+
+  function handleFavoritoClick(event) {
+    event.stopPropagation();
+    // aqui depois você liga com a action real de favorito
+  }
+
+  function handleVerMaisClick(event) {
+    event.stopPropagation();
+    if (aoClicar) {
+      aoClicar(imovel);
+    }
+  }
+
+  const favoritoIcon = imovel.favorito ? Love : Heart;
+
+  return (
+    <div className="cartao-imovel" onClick={handleClick}>
+      {/* Thumb à esquerda */}
+      <div className="cartao-imovel-thumb">
+        <img src={imovel.imagem} alt={imovel.titulo} />
       </div>
 
-      <div className="cartao-imovel-info">
-        <div className="cartao-imovel-preco">
-          R$ {imovel.preco.toLocaleString("pt-BR")}
-        </div>
+      {/* Conteúdo à direita */}
+      <div className="cartao-imovel-conteudo">
+        <div className="cartao-imovel-header">
+          <div className="cartao-imovel-textos">
+          
+            <div className="cartao-imovel-titulo">{imovel.titulo}</div>
+          </div>
 
-        <div className="cartao-imovel-titulo">{imovel.titulo}</div>
+          <button
+            type="button"
+            className={`cartao-favorito ${
+              imovel.favorito ? "cartao-favorito-ativo" : ""
+            }`}
+            onClick={handleFavoritoClick}
+            aria-label="Favoritar imóvel"
+          >
+            <img
+              src={favoritoIcon}
+              alt={imovel.favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+              className="cartao-favorito-icone"
+            />
+          </button>
+        </div>
 
         <div className="cartao-imovel-endereco">{imovel.endereco}</div>
 
-        <div className="cartao-imovel-detalhes">
-          <span>{imovel.area} m²</span>
-          <span>{imovel.quartos} quartos</span>
-          <span>{imovel.banheiros} banheiros</span>
+        <div className="cartao-imovel-footer">
+          <div className="cartao-imovel-metas">
+            <span>{imovel.area} m²</span>
+            <span>{imovel.quartos} quartos</span>
+            <span>{imovel.banheiros} banheiros</span>
+          </div>
+
+          <button
+            type="button"
+            className="cartao-imovel-botao"
+            onClick={handleVerMaisClick}
+          >
+            Ver mais
+          </button>
         </div>
       </div>
     </div>
