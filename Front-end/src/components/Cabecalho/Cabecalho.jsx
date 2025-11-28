@@ -37,12 +37,13 @@ export function Cabecalho() {
   const temNaoLida = notificacoes.some((n) => !n.lida);
   const mensagemTicker =
     notificacoes.find((n) => !n.lida)?.texto ||
-    notificacoes[0]?.texto ||
+    (notificacoes[0] && notificacoes[0].texto) ||
     "Você não tem novas notificações.";
 
+  // Fecha menus ao clicar fora
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      const target = e.target as Node;
+    function handleClick(e) {
+      const target = e.target;
 
       const clicouForaPerfil =
         refMenu.current && !refMenu.current.contains(target);
@@ -73,71 +74,67 @@ export function Cabecalho() {
   return (
     <header className="cabecalho">
       <div className="cabecalho-conteudo">
-        {/* esquerda só como espaçador / logo futura */}
+        {/* esquerda: espaço para logo no futuro */}
         <div className="cabecalho-esquerda" />
 
-        {/* direita: sino + ticker + avatar */}
-        <div className="cabecalho-direita">
-          {/* ÁREA DE NOTIFICAÇÃO = sino + ticker + dropdown */}
-          <div
-            className="cabecalho-notificacao-area"
-            ref={refNotificacao}
-          >
-            <button
-              className="cabecalho-botao-icone"
-              aria-label="Notificações"
-              type="button"
-              onClick={alternarNotificacao}
+        {/* direita: notificações + avatar */}
+<div className="cabecalho-direita">
+  {/* área de notificação: ticker + sino + dropdown */}
+  <div className="cabecalho-notificacao-area" ref={refNotificacao}>
+    {/* TICKER à esquerda do sino, só quando dropdown está fechado */}
+    {!notificacaoAberta && mensagemTicker && (
+      <div className="cabecalho-ticker">
+        <div className="cabecalho-ticker-conteudo">
+          {mensagemTicker}
+        </div>
+      </div>
+    )}
+
+    <button
+      className="cabecalho-botao-icone"
+      aria-label="Notificações"
+      type="button"
+      onClick={alternarNotificacao}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2m6-6V11a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-1.71 1.71A1 1 0 0 0 5 20h14a1 1 0 0 0 .71-1.71z"
+        />
+      </svg>
+
+      {temNaoLida && <span className="cabecalho-notificacao-dot" />}
+    </button>
+
+    {notificacaoAberta && (
+      <div className="cabecalho-menu-notificacao">
+        <div className="cabecalho-menu-notificacao-header">
+          <span>Notificações</span>
+          <span className="cabecalho-menu-notificacao-sub">
+            {temNaoLida ? "Novas" : "Todas lidas"}
+          </span>
+        </div>
+
+        <ul className="cabecalho-menu-notificacao-list">
+          {notificacoes.map((notif) => (
+            <li
+              key={notif.id}
+              className={
+                "cabecalho-menu-notificacao-item" +
+                (notif.lida
+                  ? " cabecalho-menu-notificacao-item--lida"
+                  : "")
+              }
             >
-              <svg width="22" height="22" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2m6-6V11a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-1.71 1.71A1 1 0 0 0 5 20h14a1 1 0 0 0 .71-1.71z"
-                />
-              </svg>
+              {notif.texto}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
 
-              {temNaoLida && <span className="cabecalho-notificacao-dot" />}
-            </button>
-
-            {/* TICKER grudado no sino, só quando dropdown estiver fechado */}
-            {!notificacaoAberta && mensagemTicker && (
-              <div className="cabecalho-ticker">
-                <div className="cabecalho-ticker-conteudo">
-                  {mensagemTicker}
-                </div>
-              </div>
-            )}
-
-            {/* Dropdown de notificações */}
-            {notificacaoAberta && (
-              <div className="cabecalho-menu-notificacao">
-                <div className="cabecalho-menu-notificacao-header">
-                  <span>Notificações</span>
-                  <span className="cabecalho-menu-notificacao-sub">
-                    {temNaoLida ? "Novas" : "Todas lidas"}
-                  </span>
-                </div>
-
-                <ul className="cabecalho-menu-notificacao-list">
-                  {notificacoes.map((notif) => (
-                    <li
-                      key={notif.id}
-                      className={
-                        "cabecalho-menu-notificacao-item" +
-                        (notif.lida
-                          ? " cabecalho-menu-notificacao-item--lida"
-                          : "")
-                      }
-                    >
-                      {notif.texto}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {/* Avatar + menu de perfil */}
+          {/* avatar + menu de perfil */}
           <div
             className={
               "cabecalho-avatar-wrapper" +

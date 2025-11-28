@@ -1,10 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./BarraBusca.css";
 import { ModalBusca } from "../Mobile/ModalBusca";
 
 // recebe a prop onBuscar da Home
 export function BarraBusca({ onBuscar }) {
   const [modalAberto, setModalAberto] = useState(false);
+  const [placeholderText, setPlaceholderText] = useState("Localização");
+
+  // animação de "digitar" no placeholder
+  useEffect(() => {
+    const phrases = [
+      "Ex: Setor Bueno, Goiânia",
+      "Ex: Casa com 3 quartos",
+      "Ex: Próximo ao Parque Flamboyant",
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    let timeoutId;
+
+    function typeLoop() {
+      const currentPhrase = phrases[phraseIndex];
+
+      if (!deleting) {
+        // digitando
+        const nextText = currentPhrase.slice(0, charIndex + 1);
+        setPlaceholderText(nextText);
+        charIndex += 1;
+
+        if (charIndex === currentPhrase.length) {
+          // chegou no fim, espera um pouco e começa a apagar
+          deleting = true;
+          timeoutId = setTimeout(typeLoop, 1800);
+          return;
+        }
+      } else {
+        // apagando
+        const nextText = currentPhrase.slice(0, charIndex - 1);
+        setPlaceholderText(nextText);
+        charIndex -= 1;
+
+        if (charIndex === 0) {
+          // terminou de apagar, vai para a próxima frase
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      }
+
+      timeoutId = setTimeout(typeLoop, 90);
+    }
+
+    timeoutId = setTimeout(typeLoop, 400);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   function handleBuscarClick() {
     if (typeof onBuscar === "function") {
@@ -18,7 +70,9 @@ export function BarraBusca({ onBuscar }) {
       <div className="barra-busca">
         <div className="barra-busca-container">
           <div className="campo">
-            <input placeholder="Localização" />
+            <input
+              placeholder={placeholderText || "Localização"}
+            />
           </div>
           <div className="campo">
             <input placeholder="Orçamento" />
@@ -53,8 +107,6 @@ export function BarraBusca({ onBuscar }) {
       {modalAberto && (
         <ModalBusca
           aoFechar={() => setModalAberto(false)}
-          // se você quiser que a busca do modal também abra os imóveis,
-          // pode passar essa prop e usar dentro do ModalBusca
           onBuscar={onBuscar}
         />
       )}

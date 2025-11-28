@@ -7,7 +7,6 @@ import "./BarraLateral.css";
 */
 import Home from "../../assets/icons/home.svg";
 import Estrela from "../../assets/icons/estrela.svg";
-import Like from "../../assets/icons/like.svg";
 import Catalogo from "../../assets/icons/catalogo.svg";
 import Love from "../../assets/icons/love.svg";
 import IconLogout from "../../assets/icons/logout.svg";
@@ -19,8 +18,7 @@ export function BarraLateral() {
     { id: 1, icon: Home, label: "Início", active: true },
     { id: 2, icon: Estrela, label: "IA", active: false },
     { id: 3, icon: Catalogo, label: "Catalogo", active: false },
-    { id: 4, icon: Like, label: "Gostei", active: false },
-    { id: 5, icon: Love, label: "Favoritos", active: false },
+    { id: 4, icon: Love, label: "Favoritos", active: false },
   ];
 
   function alternarSidebar() {

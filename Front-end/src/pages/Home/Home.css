@@ -11,23 +11,22 @@
 }
 
 /* como a barra de busca agora está dentro do mapa,
-   não precisamos mais do home-top,
-   mas se ainda existir em algum lugar, não terá efeito */
+   não precisamos mais do home-top */
 .home-top {
   display: none;
 }
 
-/* ======== LAYOUT PRINCIPAL (GRID) ======== */
+/* ======== LAYOUT PRINCIPAL (GRID) – DESKTOP BASE ======== */
 
 .home-layout {
   flex: 1;
-  padding: 0 48px 48px 48px; /* var(--espaco-6) ≈ 24px, var(--espaco-8) ≈ 32px, ajustei para 48px */
-  margin-top: 56px;          /* AQUI: valor fixo, sem variável */
+  padding: 0 48px 48px 48px;
+  margin-top: 56px;
 
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  gap: 24px;                 /* var(--espaco-4) ≈ 16px, aqui em px se quiser */
+  gap: 24px;
   align-items: stretch;
 }
 
@@ -38,16 +37,24 @@
   }
 }
 
-/* altura das colunas */
+/* altura das colunas – só DESKTOP */
+@media (min-width: 901px) {
+  .home-col-mapa,
+  .home-col-lista,
+  .home-col-estatisticas {
+    height: calc(100vh - 190px);
+    min-height: 260px;
+  }
+}
+
+/* no mobile vamos controlar a altura nas media queries */
 .home-col-mapa,
 .home-col-lista,
 .home-col-estatisticas {
-  height: calc(100vh - 190px); /* antes era -180px; reduz a altura para caber o novo espaço em cima */
   min-height: 260px;
 }
 
-
-/* ======== ESTADOS DO GRID ======== */
+/* ======== ESTADOS DO GRID – DESKTOP ======== */
 
 /* 1) Sem resultados: só o mapa ocupa tudo */
 .home-layout.sem-resultados {
@@ -110,9 +117,9 @@
   width: 100%;
 }
 
-/* ======== RESPONSIVO ======== */
+/* ======== RESPONSIVO: TABLET ======== */
 
-@media (max-width: 1200px) {
+@media (max-width: 1200px) and (min-width: 901px) {
   .home-layout.com-estatisticas {
     grid-template-columns: 1.2fr 360px;
     grid-template-rows: auto auto;
@@ -134,25 +141,73 @@
   }
 }
 
-@media (max-width: 900px) {
-  .home-layout {
-    padding: 0 var(--espaco-4) var(--espaco-4) var(--espaco-4);
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+/* ======== RESPONSIVO ======== */
+
+/* tablet permanece igual */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .home-layout.com-estatisticas {
+    grid-template-columns: 1.2fr 360px;
+    grid-template-rows: auto auto;
     grid-template-areas:
-      "mapa"
-      "lista"
-      "stats";
+      "mapa lista"
+      "mapa stats";
+  }
+
+  .home-col-mapa {
+    grid-area: mapa;
+  }
+
+  .home-col-lista {
+    grid-area: lista;
+  }
+
+  .home-col-estatisticas {
+    grid-area: stats;
+  }
+}
+
+/* ======== MOBILE (<= 900px) ======== */
+
+@media (max-width: 900px) {
+  /* libera scroll vertical no mobile */
+  .pagina-home {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* em vez de grid, viramos uma coluna */
+  .home-layout {
+    margin-top: 16px;
+    padding: 0 var(--espaco-4) var(--espaco-4) var(--espaco-4);
+    display: flex;              /* override do grid */
+    flex-direction: column;
+    gap: var(--espaco-4);
   }
 
   .home-col-mapa,
   .home-col-lista,
   .home-col-estatisticas {
-    height: auto;
-    min-height: 0;
+    width: 100%;
+    border-radius: 18px;
   }
 
-  .home-col-mapa {
+  /* MODO 1: sem resultados -> mapa ocupa quase a tela toda */
+  .home-layout.sem-resultados .home-col-mapa {
+    height: calc(100vh - 140px);   /* ajusta se quiser mais/menos */
+    min-height: calc(100vh - 140px);
+  }
+
+  /* MODO 2: depois da busca -> mapa diminui, lista e stats aparecem abaixo */
+  .home-layout.com-resultados .home-col-mapa {
+    height: 650px;                /* altura do mapa com resultados */
     min-height: 260px;
+  }
+
+  .home-layout.com-resultados .home-col-lista,
+  .home-layout.com-resultados .home-col-estatisticas {
+    height: auto;
+    min-height: 0;
   }
 }

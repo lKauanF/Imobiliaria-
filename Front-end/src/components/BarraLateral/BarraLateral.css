@@ -194,6 +194,202 @@
   }
 }
 
+/* ========== BOTÃO HAMBÚRGUER NO HEADER ========== */
+
+.botao-menu-header {
+  position: fixed;
+  top: 12px;           /* ajusta para alinhar com o seu header */
+  left: 32px;          /* mesmo recuo do layout */
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid #d5d5d5;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  cursor: pointer;
+  z-index: 70;
+}
+
+.botao-menu-header-linha {
+  width: 60%;
+  height: 2px;
+  border-radius: 999px;
+  background: #222222;
+}
+
+/* ========== SIDEBAR - ESTILO PILL AO LADO DO MAPA (FECHADA) ========== */
+
+.barra-lateral {
+  position: fixed;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64px;
+  height: 340px;
+
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  padding: 16px 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* ícones em cima, logout embaixo */
+  align-items: center;
+
+  z-index: 50;
+  transition:
+    width 0.22s ease,
+    height 0.22s ease,
+    border-radius 0.22s ease,
+    padding 0.22s ease,
+    transform 0.22s ease;
+}
+
+.barra-lateral-topo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.barra-lateral-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Item: versão fechada = só ícone, pequeno e moderno */
+.barra-lateral-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0.85;
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease,
+    opacity 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.barra-lateral-icone-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.barra-lateral-label {
+  display: none;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.barra-lateral-item:hover {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.barra-lateral-item.ativo {
+  background: #f4f1ff;
+  box-shadow: 0 8px 22px rgba(122, 60, 255, 0.2);
+}
+
+/* BASE / LOGOUT - sempre existe o espaço (pill fechado ou aberto) */
+.barra-lateral-base {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.botao-logout {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  border: none;
+  background: #ffecef;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transition: 0.16s ease;
+}
+
+.botao-logout-icone {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.botao-logout-label {
+  display: none; /* texto só aparece na versão expandida */
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c41f3e;
+}
+
+.botao-logout:hover {
+  transform: scale(1.05);
+}
+
+/* ========== DESKTOP: ESTADO EXPANDIDO (CARD MODERNO IGUAL FIGMA) ========== */
+
+@media (min-width: 821px) {
+  .barra-lateral.aberta {
+    width: 230px;
+    height: 380px;
+    border-radius: 32px;
+    padding: 20px 18px;
+    align-items: flex-start;
+  }
+
+  .barra-lateral.aberta .barra-lateral-itens {
+    width: 100%;
+  }
+
+  .barra-lateral.aberta .barra-lateral-item {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0 10px;
+  }
+
+  .barra-lateral.aberta .barra-lateral-label {
+    display: inline-block;
+  }
+
+  .barra-lateral.aberta .barra-lateral-item.ativo {
+    background: #f4f1ff;
+    box-shadow: 0 10px 26px rgba(122, 60, 255, 0.15);
+  }
+
+  .barra-lateral.aberta .botao-logout {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .barra-lateral.aberta .botao-logout-label {
+    display: inline-block;
+  }
+}
+
 /* ========== MOBILE: LATERAL CHEIA + OVERLAY ========== */
 
 .overlay-mobile {
@@ -201,15 +397,30 @@
 }
 
 @media (max-width: 820px) {
-  .barra-lateral {
+ .barra-lateral {
     left: 0;
     top: 0;
     transform: translateX(-110%);
-    width: 240px;
+    width: 260px;
     height: 100vh;
-    border-radius: 0 20px 20px 0;
-    padding-top: 90px;
-    padding-left: 20px;
+
+    /* FUNDO FORTE, USANDO SUA PALETA AZUL */
+    background: linear-gradient(
+      150deg,
+      #072c4e 0%,    /* bem próximo da var(--cor-primaria) */
+      #0b3b70 45%,   /* azul intermediário mais forte */
+      #3ea0e1 100%   /* sua var(--cor-secundaria) para dar brilho */
+    );
+
+    border-radius: 0 24px 24px 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 8px 0 28px rgba(15, 23, 42, 0.35);
+
+    padding-top: 96px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+
     align-items: flex-start;
     justify-content: flex-start;
     gap: 18px;
@@ -220,24 +431,50 @@
     transform: translateX(0);
   }
 
+  /* topo ocupa o espaço, empurrando o logout pra baixo */
+  .barra-lateral-topo {
+    width: 100%;
+    flex: 1;
+  }
+
   .barra-lateral-itens {
+    width: 100%;
     align-items: flex-start;
+    gap: 18px;
   }
 
   .barra-lateral-item {
     width: 100%;
     height: 44px;
-    border-radius: 14px;
+    border-radius: 16px;
     justify-content: flex-start;
+    padding: 0 14px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .barra-lateral-item.ativo {
+    background: rgba(244, 241, 255, 0.95);
+    box-shadow: 0 10px 24px rgba(122, 60, 255, 0.18);
   }
 
   .barra-lateral-label {
     display: inline-block;
   }
 
+  /* base vai para o rodapé da sidebar */
+  .barra-lateral-base {
+    width: 100%;
+    margin-top: auto;          /* empurra o bloco para o final da coluna */
+  }
+
   .botao-logout {
     width: 100%;
+    height: 48px;
+    border-radius: 999px;
     justify-content: center;
+    background: rgba(255, 236, 239, 0.95);
+    box-shadow: 0 8px 24px rgba(248, 113, 113, 0.25);
   }
 
   .botao-logout-label {

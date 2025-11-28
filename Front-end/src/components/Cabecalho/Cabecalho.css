@@ -49,7 +49,6 @@
   justify-content: center;
   cursor: pointer;
   color: var(--cor-preto);
-  box-shadow: var(--sombra-suave);
   position: relative;
 }
 
@@ -256,5 +255,50 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ========== MOBILE (até 768px) ========== */
+@media (max-width: 768px) {
+  .cabecalho {
+    height: 64px;
+  }
+
+  .cabecalho-conteudo {
+    height: 64px;
+    padding: 0 16px;
+    /* se o botão hamburguer for fixo na esquerda, às vezes é legal
+       deixar um pequeno respiro a mais do lado direito */
+  }
+
+  .cabecalho-direita {
+    gap: 12px;
+  }
+
+  /* Sino + ticker ocupam menos largura */
+  .cabecalho-notificacao-area {
+    max-width: 55vw;
+  }
+
+  .cabecalho-botao-icone {
+    width: 32px;
+    height: 32px;
+  }
+
+  .cabecalho-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* ticker fica mais calmo no mobile */
+  .cabecalho-ticker-conteudo {
+    font-size: 0.72rem;
+    animation-duration: 16s;
+  }
+
+  /* dropdowns um pouco mais estreitos e grudados na borda */
+  .cabecalho-menu-perfil,
+  .cabecalho-menu-notificacao {
+    right: 8px;
   }
 }
