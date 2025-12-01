@@ -10,18 +10,14 @@
   flex-direction: column;
 }
 
-/* como a barra de busca agora está dentro do mapa,
-   não precisamos mais do home-top */
-.home-top {
-  display: none;
-}
+/* não usamos mais home-top; tudo está dentro do grid */
 
-/* ======== LAYOUT PRINCIPAL (GRID) – DESKTOP BASE ======== */
+/* ======== LAYOUT PRINCIPAL (GRID) – DESKTOP ======== */
 
 .home-layout {
   flex: 1;
   padding: 0 48px 48px 48px;
-  margin-top: 56px;
+  margin-top: 56px; /* distância do header */
 
   display: grid;
   grid-template-columns: 1fr;
@@ -47,7 +43,7 @@
   }
 }
 
-/* no mobile vamos controlar a altura nas media queries */
+/* fallback p/ mobile/tablet */
 .home-col-mapa,
 .home-col-lista,
 .home-col-estatisticas {
@@ -56,28 +52,52 @@
 
 /* ======== ESTADOS DO GRID – DESKTOP ======== */
 
-/* 1) Sem resultados: só o mapa ocupa tudo */
 .home-layout.sem-resultados {
   grid-template-columns: 1fr;
 }
 
-/* 2) Com resultados, sem estatísticas: Mapa | Lista */
 .home-layout.com-resultados:not(.com-estatisticas) {
   grid-template-columns: 1.4fr 450px;
 }
 
-/* 3) Com resultados + estatísticas: Mapa | Lista | Estatísticas */
 .home-layout.com-estatisticas {
   grid-template-columns: 1.2fr 450px 400px;
 }
 
-/* ======== COLUNA 1: MAPA ======== */
+/* ======== COLUNA 1: BUSCA + MAPA ======== */
 
+/* Coluna do mapa sem card cinza de fundo */
 .home-col-mapa {
+  background: transparent;      /* tira o cinza */
+  border-radius: 0;             /* não precisa mais */
+  overflow: visible;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+
+  padding: 0;                   /* tira a borda “colchão” cinza */
+}
+
+/* Mantém o mapão com borda arredondada, dentro da coluna */
+.home-col-mapa-mapa {
+  flex: 1;
+  min-height: 260px;
+}
+
+.home-col-mapa .mapa-full {
+  border-radius: 18px;
+}
+
+
+
+/* card do mapa (antigo home-col-mapa) */
+.home-col-mapa-card {
   background: #e3e7eb;
   border-radius: 22px;
   overflow: hidden;
-  position: relative; /* importante para a barra ficar sobre o mapa */
+  flex: 1;              /* ocupa o resto da altura da coluna */
 }
 
 /* ======== COLUNA 2: LISTA DE IMÓVEIS ======== */
@@ -117,33 +137,8 @@
   width: 100%;
 }
 
-/* ======== RESPONSIVO: TABLET ======== */
+/* ======== RESPONSIVO TABLET (entre 901 e 1200) ======== */
 
-@media (max-width: 1200px) and (min-width: 901px) {
-  .home-layout.com-estatisticas {
-    grid-template-columns: 1.2fr 360px;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "mapa lista"
-      "mapa stats";
-  }
-
-  .home-col-mapa {
-    grid-area: mapa;
-  }
-
-  .home-col-lista {
-    grid-area: lista;
-  }
-
-  .home-col-estatisticas {
-    grid-area: stats;
-  }
-}
-
-/* ======== RESPONSIVO ======== */
-
-/* tablet permanece igual */
 @media (max-width: 1200px) and (min-width: 901px) {
   .home-layout.com-estatisticas {
     grid-template-columns: 1.2fr 360px;
@@ -169,7 +164,6 @@
 /* ======== MOBILE (<= 900px) ======== */
 
 @media (max-width: 900px) {
-  /* libera scroll vertical no mobile */
   .pagina-home {
     height: auto;
     min-height: 100vh;
@@ -177,11 +171,10 @@
     overflow-y: auto;
   }
 
-  /* em vez de grid, viramos uma coluna */
   .home-layout {
     margin-top: 16px;
     padding: 0 var(--espaco-4) var(--espaco-4) var(--espaco-4);
-    display: flex;              /* override do grid */
+    display: flex;
     flex-direction: column;
     gap: var(--espaco-4);
   }
@@ -193,15 +186,15 @@
     border-radius: 18px;
   }
 
-  /* MODO 1: sem resultados -> mapa ocupa quase a tela toda */
+  /* sem resultados -> mapa ocupa quase a tela toda */
   .home-layout.sem-resultados .home-col-mapa {
-    height: calc(100vh - 140px);   /* ajusta se quiser mais/menos */
+    height: calc(100vh - 140px);
     min-height: calc(100vh - 140px);
   }
 
-  /* MODO 2: depois da busca -> mapa diminui, lista e stats aparecem abaixo */
+  /* com resultados -> mapa reduz, lista vem embaixo */
   .home-layout.com-resultados .home-col-mapa {
-    height: 650px;                /* altura do mapa com resultados */
+    height: 650px;
     min-height: 260px;
   }
 

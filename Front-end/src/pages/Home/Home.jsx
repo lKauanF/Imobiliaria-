@@ -8,7 +8,6 @@ import { Mapa } from "../../components/Mapa/Mapa";
 import { ListaImoveis } from "../../components/ListaImoveis/ListaImoveis";
 import { EstatisticasImovel } from "../../components/EstatisticasImovel/EstatisticasImovel";
 
-// importa os mocks de outro arquivo
 import { MOCK_IMOVEIS } from "../../mocks/mockImoveis";
 
 export function Home() {
@@ -38,13 +37,19 @@ export function Home() {
           pesquisou ? "com-resultados" : "sem-resultados"
         } ${selectedProperty ? "com-estatisticas" : ""}`}
       >
-        {/* COLUNA 1: MAPA + BARRA DE BUSCA SOBREPOSTA */}
+        {/* COLUNA 1: BUSCA + MAPA */}
         <div className="home-col-mapa">
-          <BarraBusca onBuscar={handleBuscar} />
-          <Mapa />
+          <div className="home-col-mapa-busca">
+            <BarraBusca onBuscar={handleBuscar} />
+          </div>
+
+          <div className="home-col-mapa-mapa">
+            {/* passa os imóveis para desenhar os pins */}
+            <Mapa imoveis={MOCK_IMOVEIS} />
+          </div>
         </div>
 
-        {/* COLUNA 2: LISTA DE IMÓVEIS (apenas após busca) */}
+        {/* COLUNA 2: LISTA DE IMÓVEIS */}
         {pesquisou && (
           <div className="home-col-lista">
             <ListaImoveis
@@ -55,7 +60,7 @@ export function Home() {
           </div>
         )}
 
-        {/* COLUNA 3: ESTATÍSTICAS (apenas após selecionar um imóvel) */}
+        {/* COLUNA 3: ESTATÍSTICAS */}
         {selectedProperty && (
           <aside className="home-col-estatisticas">
             <EstatisticasImovel imovel={selectedProperty} />

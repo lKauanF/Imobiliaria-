@@ -1,7 +1,17 @@
+// src/components/Mobile/ModalBusca.jsx
 import React from "react";
 import "./ModalBusca.css";
 
-export function ModalBusca({ aoFechar }) {
+export function ModalBusca({ aoFechar, onBuscar }) {
+  function handleBuscarClick() {
+    // dispara a busca na Home (abre a lista de imóveis)
+    if (typeof onBuscar === "function") {
+      onBuscar(); // se depois quiser, pode passar filtros aqui
+    }
+    // fecha o modal
+    aoFechar();
+  }
+
   return (
     <div className="modal-busca-overlay">
       <div className="modal-busca">
@@ -30,7 +40,13 @@ export function ModalBusca({ aoFechar }) {
           </select>
         </div>
 
-        <button className="modal-botao-buscar">Buscar</button>
+        <button
+          className="modal-botao-buscar"
+          type="button"
+          onClick={handleBuscarClick}
+        >
+          Buscar
+        </button>
       </div>
     </div>
   );

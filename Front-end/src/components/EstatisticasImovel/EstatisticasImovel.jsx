@@ -1,7 +1,49 @@
 import React from "react";
 import "./EstatisticasImovel.css";
 
-// por enquanto só usamos os dados básicos do imóvel para exibir o título
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  BarChart,
+  Bar,
+} from "recharts";
+
+// dados mockados para o gráfico de linha (histórico de preço)
+const priceHistoryData = [
+  { mes: "Fev", valor: 520000 },
+  { mes: "Abr", valor: 530000 },
+  { mes: "Jun", valor: 540000 },
+  { mes: "Jul", valor: 550000 },
+  { mes: "Set", valor: 560000 },
+  { mes: "Out", valor: 565000 },
+  { mes: "Dez", valor: 570000 },
+];
+
+// dados mockados para o gráfico de barras (região)
+const regionPriceData = [
+  { categoria: "Bairro", valor: 580000 },
+  { categoria: "Cidade", valor: 560000 },
+  { categoria: "Estado", valor: 540000 },
+];
+
+// ticks mais “limpos” para o eixo Y (3 valores)
+const PRICE_TICKS_HISTORY = [520000, 545000, 570000];
+const PRICE_TICKS_REGION = [520000, 550000, 580000];
+
+function formatValorEixo(valor) {
+  // transforma 520000 -> "R$ 520k"
+  return `R$ ${(valor / 1000).toFixed(0)}k`;
+}
+
+function formatTooltipCurrency(valor) {
+  return `R$ ${valor.toLocaleString("pt-BR")}`;
+}
+
 export function EstatisticasImovel({ imovel }) {
   if (!imovel) {
     return (
@@ -25,7 +67,37 @@ export function EstatisticasImovel({ imovel }) {
           </div>
 
           <div className="estatistica-chart-placeholder">
-            <span>Gráfico de linha aqui</span>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={priceHistoryData} margin={{ top: 8, right: 16, left: 0, bottom: 16 }}>
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="mes"
+                  tick={{ fontSize: 10, fill: "var(--cor-preto-50)" }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  ticks={PRICE_TICKS_HISTORY}
+                  tickFormatter={formatValorEixo}
+                  tick={{ fontSize: 10, fill: "var(--cor-preto-50)" }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={52}
+                />
+                <Tooltip
+                  formatter={(value) => formatTooltipCurrency(value)}
+                  labelFormatter={(label) => `Mês: ${label}`}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="valor"
+                  stroke="#063045"
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 4 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </section>
 
@@ -37,7 +109,33 @@ export function EstatisticasImovel({ imovel }) {
           </div>
 
           <div className="estatistica-chart-placeholder">
-            <span>Gráfico de barras aqui</span>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={regionPriceData}
+                margin={{ top: 8, right: 16, left: 0, bottom: 16 }}
+              >
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="categoria"
+                  tick={{ fontSize: 10, fill: "var(--cor-preto-50)" }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  ticks={PRICE_TICKS_REGION}
+                  tickFormatter={formatValorEixo}
+                  tick={{ fontSize: 10, fill: "var(--cor-preto-50)" }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={52}
+                />
+                <Tooltip
+                  formatter={(value) => formatTooltipCurrency(value)}
+                  labelFormatter={(label) => label}
+                />
+                <Bar dataKey="valor" fill="#063045" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </section>
 

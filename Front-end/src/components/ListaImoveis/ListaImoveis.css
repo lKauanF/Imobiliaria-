@@ -9,6 +9,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--espaco-3);
+
+  /* FIXAR DENTRO DA GRID (scroll interno) */
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
+  /* fundo sólido para não “vazar” os cards passando por trás */
+  background: var(--cor-branco);
+  padding-top: var(--espaco-2);
+  padding-bottom: var(--espaco-2);
+  /* leve linha ou sombra opcional */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 /* linha com título e botão fechar */
@@ -97,4 +109,19 @@
   flex-direction: column;
   gap: var(--espaco-3);
   padding-bottom: var(--espaco-3);
+}
+
+/* ===== MOBILE: filtro fixo e só os cards rolam ===== */
+@media (max-width: 900px) {
+  .lista-imoveis {
+    /* painel da lista ocupa boa parte da tela */
+    max-height: 80vh;
+  }
+
+  /* aqui fica o truque:
+     só os cards rolam, o topo (filtros) fica parado */
+  .lista-imoveis-grid {
+    flex: 1;
+    overflow-y: auto;
+  }
 }

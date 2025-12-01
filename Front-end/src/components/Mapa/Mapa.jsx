@@ -1,58 +1,107 @@
-import React, { useCallback, useState } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import React from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import "./Mapa.css";
 
-export function Mapa() {
-  const [mapRef, setMapRef] = useState(null);
+// Corrige os ícones padrão do Leaflet no bundler
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "SUA_API_KEY_AQUI",
-  });
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
-  const centro = { lat: -15.8267, lng: -47.9218 };
+// Centro aproximado de Goiânia
+const DEFAULT_CENTER = [-16.6869, -49.2648];
 
-  const containerStyle = {
-    width: "100%",
-    height: "100%",
-  };
+function ZoomButtons() {
+  const map = useMap();
 
-  const aoCarregarMapa = useCallback((map) => {
-    setMapRef(map);
-  }, []);
+  function handleZoomIn() {
+    map.setZoom(map.getZoom() + 1);
+  }
 
-  const aumentarZoom = () => {
-    if (mapRef) mapRef.setZoom(mapRef.getZoom() + 1);
-  };
-
-  const diminuirZoom = () => {
-    if (mapRef) mapRef.setZoom(mapRef.getZoom() - 1);
-  };
+  function handleZoomOut() {
+    map.setZoom(map.getZoom() - 1);
+  }
 
   return (
+    <div className="mapa-zoom-controles">
+      <button type="button" onClick={handleZoomIn}>
+        +
+      </button>
+      <button type="button" onClick={handleZoomOut}>
+        -
+      </button>
+    </div>
+  );
+}
+
+export function Mapa({ imoveis }) {
+  return (
     <div className="mapa-full">
-
-      {/* Botões de Zoom */}
-      <div className="mapa-zoom-controles">
-        <button onClick={aumentarZoom}>+</button>
-        <button onClick={diminuirZoom}>-</button>
-      </div>
-
-     
-
-      {isLoaded ? (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={centro}
-          zoom={13}
-          onLoad={aoCarregarMapa}
-          options={{
-            disableDefaultUI: true,
-            clickableIcons: false,
-          }}
+      <MapContainer
+        center={DEFAULT_CENTER}
+        zoom={13}
+        scrollWheelZoom
+        className="mapa-container"
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; OpenStreetMap contributors'
         />
-      ) : (
-        <p>Carregando mapa...</p>
-      )}
+
+        {/* pins dos imóveis */}
+        {imoveis
+          .filter(
+            (imovel) =>
+              typeof imovel.latitude === "number" &&
+              typeof imovel.longitude === "number"
+          )
+          .map((imovel) => (
+            <Marker
+              key={imovel.id}
+              position={[imovel.latitude, imovel.longitude]}
+            >
+              {/* Tooltip/card ao passar o mouse */}
+              <Tooltip
+                direction="top"
+                offset={[0, -10]}
+                opacity={1}
+                sticky
+                className="mapa-tooltip"
+              >
+                <div className="mapa-tooltip-card">
+                  <div className="mapa-tooltip-thumb">
+                    <img src={imovel.imagem} alt={imovel.titulo} />
+                  </div>
+
+                  <div className="mapa-tooltip-info">
+                    <div className="mapa-tooltip-preco">
+                      R$ {imovel.preco.toLocaleString("pt-BR")}
+                    </div>
+                    <div className="mapa-tooltip-endereco">
+                      {imovel.endereco}
+                    </div>
+                  </div>
+                </div>
+              </Tooltip>
+            </Marker>
+          ))}
+
+        <ZoomButtons />
+      </MapContainer>
     </div>
   );
 }

@@ -33,14 +33,14 @@
 .estatisticas-grid {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-3);
+  gap: var(--espaco-2); /* um pouco menos de espaço entre os cards */
 }
 
 /* card individual */
 .estatistica-card {
   background: var(--cor-branco);
   border-radius: 16px;
-  padding: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-3) var(--espaco-2); /* menos padding embaixo */
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
 }
 
@@ -64,9 +64,9 @@
   color: var(--cor-preto-50);
 }
 
-/* Placeholder dos gráficos (você troca por gráficos reais depois) */
+/* Área do gráfico: aumentei a altura para não ficar achatado */
 .estatistica-chart-placeholder {
-  height: 120px;
+  height: 170px; /* antes 120px */
   border-radius: 12px;
   background: var(--cor-fundo-claro);
   display: flex;
@@ -105,10 +105,10 @@
 /* responsivo simples */
 @media (max-width: 900px) {
   .estatisticas-container {
-    height: auto;
+    height: auto; /* não força altura grande no mobile */
   }
 
   .estatistica-chart-placeholder {
-    height: 140px;
+    height: 200px; /* um pouco mais alto no mobile para ficar proporcional */
   }
 }
